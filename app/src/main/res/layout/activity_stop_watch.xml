@@ -47,6 +47,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/bgcircle" />
 
+
     <EditText
         android:id="@+id/timerBeepFreq"
         android:layout_width="253dp"
@@ -54,12 +55,33 @@
         android:layout_marginTop="92dp"
         android:background="@null"
         android:ems="10"
+        android:hint="Beep frequency"
+        android:textColorHint="#FFF"
         android:inputType="number"
         android:textColor="#FFF"
-        android:textSize="36sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/timerHere">
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/totalTime"
+        android:layout_width="253dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="44dp"
+        android:background="@null"
+        android:ems="10"
+        android:hint="Total time"
+        android:textColorHint="#FFF"
+        android:inputType="number"
+        android:textColor="#FFF"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/timerBeepFreq">
 
         <requestFocus />
     </EditText>
@@ -70,7 +92,7 @@
         android:layout_height="55dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="84dp"
+        android:layout_marginBottom="76dp"
         android:background="@drawable/bgbtngreen"
         android:text="Start"
         android:textAllCaps="false"

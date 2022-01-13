@@ -27,9 +27,9 @@ public class StopWatchAct extends AppCompatActivity {
     ImageView icanchor;
     Animation roundingalone;
     Chronometer timerHere;
-    EditText timerBeepFreq;
+    EditText timerBeepFreq, totalTime;
     int limit=30;
-
+    int total=6;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,8 +40,12 @@ public class StopWatchAct extends AppCompatActivity {
         icanchor = findViewById(R.id.icanchor);
         timerHere = findViewById(R.id.timerHere);
         timerBeepFreq = findViewById(R.id.timerBeepFreq);
-        timerBeepFreq.setText("10");
+        timerBeepFreq.setText("30");
         timerBeepFreq.setGravity(Gravity.CENTER_HORIZONTAL);
+
+        totalTime = findViewById(R.id.totalTime);
+        totalTime.setText("6");
+        totalTime.setGravity(Gravity.CENTER_HORIZONTAL);
 
         btnstop.setAlpha(0);
 
@@ -52,7 +56,6 @@ public class StopWatchAct extends AppCompatActivity {
         Typeface MRegular = Typeface.createFromAsset(getAssets(), "fonts/MRegular.ttf");
 
         btnstart.setTypeface(MMedium);
-
 
         btnstart.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -72,14 +75,13 @@ public class StopWatchAct extends AppCompatActivity {
 //                    limit = Integer.valueOf(String.valueOf(timerBeepFreq.getText()));
 //                }
                 limit = Integer.valueOf(String.valueOf(timerBeepFreq.getText()));
+                total = Integer.valueOf(String.valueOf(totalTime.getText()));
 
                 ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
                 toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP,150);
 
             }
         });
-
-
 
         timerHere.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
                                                    @Override
@@ -88,6 +90,7 @@ public class StopWatchAct extends AppCompatActivity {
 //                                                       long counter = 0;
                                                        initial = SystemClock.elapsedRealtime() - chronometer.getBase();
                                                        elapsed = initial;
+
 //                                                       Log.d("executed", String.valueOf(elapsed%(limit * 1000)));
                                                        if (elapsed % (limit * 1000) <= 1000) {
                                                            ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
@@ -96,6 +99,7 @@ public class StopWatchAct extends AppCompatActivity {
 //                                                           counter = counter + 1;
                                                            if (chronometer.getCurrentTextColor() == Color.WHITE){
                                                                chronometer.setTextColor(Color.RED);
+//                                                               Log.d("executed", String.valueOf(elapsed));
                                                            } else {
                                                                chronometer.setTextColor(Color.WHITE);
                                                            }
@@ -104,6 +108,16 @@ public class StopWatchAct extends AppCompatActivity {
 //                        toast.setMargin(50,50);
 //                        toast.show();
 
+                                                       }
+
+                                                       if (elapsed >= total * 1000 * 60){
+                                                           ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
+                                                           toneGen1.startTone(ToneGenerator.TONE_CDMA_ABBR_ALERT, 600);
+                                                           chronometer.setTextColor(Color.GREEN);
+                                                           icanchor.clearAnimation();
+                                                           timerHere.stop(); //pause
+                                                           btnstop.animate().alpha(0).translationY(100).setDuration(300).start();
+                                                           btnstart.animate().alpha(1).setDuration(300).start();
                                                        }
                                                    }
                                                });
